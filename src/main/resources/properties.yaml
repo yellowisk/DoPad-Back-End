@@ -8,13 +8,17 @@ spring:
     driver-class-name: org.postgresql.Driver
     testWhileIdle: true
     validationQuery: SELECT 1
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
       hibernate:
-        ddl-auto: update
-      properties:
-        hibernate:
-          dialetc: org.hibernate.dialect.PostgreSQLDialect
-          format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 
 queries:
   sql:
+    insert:
+      user: >
+        INSERT INTO dopad_platform.user (id, username, password) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)

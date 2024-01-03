@@ -1,12 +1,7 @@
 package br.com.dopad.domain.entities.line;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.sql.Timestamp;
 
-@Getter
-@Setter
 public class Line {
     private String text;
     private String author;
@@ -17,6 +12,38 @@ public class Line {
         this.text = text;
         this.author = author;
         this.pageChangeCode = pageChangeCode;
+        this.date = date;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPageChangeCode() {
+        return pageChangeCode;
+    }
+
+    public void setPageChangeCode(String pageChangeCode) {
+        this.pageChangeCode = pageChangeCode;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 }

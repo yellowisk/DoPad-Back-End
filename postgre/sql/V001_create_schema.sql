@@ -2,6 +2,8 @@ CREATE SCHEMA dopad_platform;
 
 ALTER SCHEMA dopad_platform OWNER TO "dopad";
 
+DROP TABLE IF EXISTS dopad_platform.user CASCADE;
+
 CREATE TABLE dopad_platform.user (
     id uuid NOT NULL,
     username varchar NOT NULL,
@@ -13,6 +15,8 @@ ALTER TABLE dopad_platform.user OWNER TO "dopad";
 ALTER TABLE dopad_platform.user
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
+DROP TYPE IF EXISTS dopad_platform.page_status CASCADE;
+
 CREATE TYPE dopad_platform.page_status AS ENUM (
     'FAILED_TO_SEND',
     'IN_PROGRESS',
@@ -20,6 +24,8 @@ CREATE TYPE dopad_platform.page_status AS ENUM (
 );
 
 ALTER TYPE dopad_platform.page_status OWNER TO "dopad";
+
+DROP TABLE IF EXISTS dopad_platform.page CASCADE;
 
 CREATE TABLE dopad_platform.page (
     id uuid NOT NULL,
@@ -38,4 +44,5 @@ ALTER TABLE dopad_platform.page
     ADD CONSTRAINT page_pkey PRIMARY KEY (id);
 
 ALTER TABLE dopad_platform.page
-    ADD CONSTRAINT page_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES dopad_platform.user(id);
+    ADD CONSTRAINT page_owner_id_fkey FOREIGN KEY (owner_id)
+        REFERENCES dopad_platform.user(id);
