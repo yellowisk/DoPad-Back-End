@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: dopad-application
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dopad
+    username: dopad-app
+    password: dopad-app
+    driver-class-name: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialetc: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+
+queries:
+  sql:
