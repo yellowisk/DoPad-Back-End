@@ -2,6 +2,12 @@ package br.com.dopad.domain.entities.page;
 
 import br.com.dopad.domain.entities.user.User;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -9,33 +15,60 @@ public class Page {
     private UUID pageId;
     private UUID ownerId;
     private String title;
+    private String text;
     private PageStatus status;
     private String changeCode;
     private boolean isPrivate;
-    private Map<User, Integer> members;
+    private Timestamp uploadDate;
+    private List<User> members;
 
-    public Page(UUID pageId, UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Map<User, Integer> members) {
+    public Page(UUID pageId, UUID ownerId, String title, String text, PageStatus status,
+                String changeCode, boolean isPrivate,Timestamp uploadDate, List<User> members) {
         this.pageId = pageId;
+        this.ownerId = ownerId;
+        this.title = title;
+        this.text = text;
+        this.status = status;
+        this.changeCode = changeCode;
+        this.isPrivate = isPrivate;
+        this.uploadDate = uploadDate;
+        this.members = members;
+    }
+
+    public Page(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate) {
         this.ownerId = ownerId;
         this.title = title;
         this.status = status;
         this.changeCode = changeCode;
         this.isPrivate = isPrivate;
-        this.members = members;
+        this.uploadDate = uploadDate;
     }
 
-    public Page(UUID ownerId, String title, boolean isPrivate) {
-        this.ownerId = ownerId;
-        this.title = title;
-        this.isPrivate = isPrivate;
+    public static Page createForDB(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate) {
+        return new Page(ownerId, title, status, changeCode, isPrivate, uploadDate);
     }
 
-    public static Page createWithOwnerTitleAndIsPrivate(UUID ownerId, String title, boolean isPrivate) {
-        return new Page(ownerId, title, isPrivate);
+    public static Page createFull(UUID pageId, UUID ownerId, String title, String text,
+                                  PageStatus status, String changeCode, boolean isPrivate,
+                                  Timestamp uploadDate, List<User> members) {
+        return new Page(pageId, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
     }
 
-    public static Page createFull(UUID pageId, UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Map<User, Integer> members) {
-        return new Page(pageId, ownerId, title, status, changeCode, isPrivate, members);
+    public Page getNewInstanceWithId(UUID pageId) {
+        return new Page(pageId, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
+    }
+
+    public static String generateChangeCode(String title) {
+        try {
+            String inputString = title + System.currentTimeMillis();
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(inputString.getBytes(StandardCharsets.UTF_8));
+            String encodedHash = Base64.getEncoder().encodeToString(hashBytes);
+            return encodedHash;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UUID getPageId() {
@@ -62,6 +95,14 @@ public class Page {
         this.title = title;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public PageStatus getStatus() {
         return status;
     }
@@ -86,11 +127,19 @@ public class Page {
         isPrivate = aPrivate;
     }
 
-    public Map<User, Integer> getMembers() {
+    public Timestamp getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Timestamp uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(Map<User, Integer> members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
 }

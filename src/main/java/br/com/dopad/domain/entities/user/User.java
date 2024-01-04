@@ -13,6 +13,14 @@ public class User {
         this.password = password;
     }
 
+    public User(UUID userId) {
+        this.userId = userId;
+    }
+
+    public static User createWithOnlyId(UUID userId) {
+        return new User(userId);
+    }
+
     public UUID getUserId() {
         return userId;
     }

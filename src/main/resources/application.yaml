@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: dopad-application
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dopad
+    username: dopad-app
+    password: dopad-app
+    driver-class-name: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+
+queries:
+  sql:
+    user-dao:
+      insert:
+        user: >
+          INSERT INTO dopad_platform.user (id, username, password) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    page-dao:
+      insert:
+        page: >
+          INSERT INTO dopad_platform.page (id, owner_id, title, text, status, change_code, upload_date, is_private) 
+          VALUES (?, ?, ?, (to_json(?::jsonb)), ?::page_status, ?, ?, ?)
+    page-membership-dao:
+        insert:
+          page-membership: >
+            INSERT INTO dopad_platform.page_membership (page_id, user_id) VALUES (?, ?)
