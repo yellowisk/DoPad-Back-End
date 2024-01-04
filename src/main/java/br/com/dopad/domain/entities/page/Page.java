@@ -24,6 +24,20 @@ public class Page {
         this.members = members;
     }
 
+    public Page(UUID ownerId, String title, boolean isPrivate) {
+        this.ownerId = ownerId;
+        this.title = title;
+        this.isPrivate = isPrivate;
+    }
+
+    public static Page createWithOwnerTitleAndIsPrivate(UUID ownerId, String title, boolean isPrivate) {
+        return new Page(ownerId, title, isPrivate);
+    }
+
+    public static Page createFull(UUID pageId, UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Map<User, Integer> members) {
+        return new Page(pageId, ownerId, title, status, changeCode, isPrivate, members);
+    }
+
     public UUID getPageId() {
         return pageId;
     }
