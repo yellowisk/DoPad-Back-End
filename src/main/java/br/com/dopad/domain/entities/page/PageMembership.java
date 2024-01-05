@@ -16,6 +16,24 @@ public class PageMembership {
         this.status = status;
     }
 
+    public PageMembership(UUID pageId, UUID userId, PageMembershipStatus status) {
+        this.pageId = pageId;
+        this.userId = userId;
+        this.status = status;
+    }
+
+    public PageMembership getNewInstanceWithId(UUID id) {
+        return new PageMembership(id, pageId, userId, status);
+    }
+
+    public static PageMembership createFull(UUID id, UUID pageId, UUID userId, PageMembershipStatus status) {
+        return new PageMembership(id, pageId, userId, status);
+    }
+
+    public static PageMembership createForDB(UUID pageId, UUID userId, PageMembershipStatus status) {
+        return new PageMembership(pageId, userId, status);
+    }
+
     public UUID getId() {
         return id;
     }

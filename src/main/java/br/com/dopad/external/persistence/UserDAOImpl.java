@@ -37,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User mapperUserFromRs(ResultSet rs, int rowNum) throws SQLException {
-        UUID userId = UUID.fromString(rs.getString("user_id"));
+        UUID userId = (UUID) rs.getObject("user_id");
         String name = rs.getString("name");
         String password = rs.getString("password");
         return User.createFull(userId, name, password);
