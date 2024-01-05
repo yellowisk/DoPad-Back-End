@@ -47,17 +47,29 @@ ALTER TABLE dopad_platform.page
     ADD CONSTRAINT page_owner_id_fkey FOREIGN KEY (owner_id)
         REFERENCES dopad_platform.user(id);
 
+DROP TYPE IF EXISTS dopad_platform.page_membership_status CASCADE;
+
+CREATE TYPE dopad_platform.page_membership_status AS ENUM (
+    'PENDING',
+    'ACCEPTED',
+    'REJECTED'
+);
+
+ALTER TYPE dopad_platform.page_membership_status OWNER TO "dopad";
+
 DROP TABLE IF EXISTS dopad_platform.page_membership CASCADE;
 
 CREATE TABLE dopad_platform.page_membership (
+    id uuid NOT NULL,
     page_id uuid NOT NULL,
-    user_id uuid NOT NULL
+    user_id uuid NOT NULL,
+    status dopad_platform.page_membership_status NOT NULL
 );
 
 ALTER TABLE dopad_platform.page_membership OWNER TO "dopad";
 
 ALTER TABLE dopad_platform.page_membership
-    ADD CONSTRAINT page_membership_pkey PRIMARY KEY (page_id, user_id);
+    ADD CONSTRAINT page_membership_pkey PRIMARY KEY (id);
 
 ALTER TABLE dopad_platform.page_membership
     ADD CONSTRAINT page_membership_page_id_fkey FOREIGN KEY (page_id)
