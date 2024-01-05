@@ -6,13 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class Page {
-    private UUID pageId;
+    private UUID id;
     private UUID ownerId;
     private String title;
     private String text;
@@ -22,9 +22,9 @@ public class Page {
     private Timestamp uploadDate;
     private List<User> members;
 
-    public Page(UUID pageId, UUID ownerId, String title, String text, PageStatus status,
-                String changeCode, boolean isPrivate,Timestamp uploadDate, List<User> members) {
-        this.pageId = pageId;
+    public Page(UUID id, UUID ownerId, String title, String text, PageStatus status,
+                String changeCode, boolean isPrivate, Timestamp uploadDate, List<User> members) {
+        this.id = id;
         this.ownerId = ownerId;
         this.title = title;
         this.text = text;
@@ -44,18 +44,35 @@ public class Page {
         this.uploadDate = uploadDate;
     }
 
-    public static Page createForDB(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate) {
-        return new Page(ownerId, title, status, changeCode, isPrivate, uploadDate);
+    public Page(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate, ArrayList<User> members) {
+        this.ownerId = ownerId;
+        this.title = title;
+        this.status = status;
+        this.changeCode = changeCode;
+        this.isPrivate = isPrivate;
+        this.uploadDate = uploadDate;
+        this.members = members;
     }
 
-    public static Page createFull(UUID pageId, UUID ownerId, String title, String text,
+    public static Page createForDB(UUID ownerId, String title, PageStatus status, String changeCode,
+                                   boolean isPrivate, Timestamp uploadDate, ArrayList<User> members) {
+        return new Page(ownerId, title, status, changeCode, isPrivate, uploadDate, members);
+    }
+
+    public static Page createFull(UUID id, UUID ownerId, String title, String text,
                                   PageStatus status, String changeCode, boolean isPrivate,
                                   Timestamp uploadDate, List<User> members) {
-        return new Page(pageId, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
+        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
     }
 
-    public Page getNewInstanceWithId(UUID pageId) {
-        return new Page(pageId, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
+    public static Page createForResultSet(UUID id, UUID ownerId, String title, String text,
+                                          PageStatus status, String changeCode, boolean isPrivate,
+                                          Timestamp uploadDate) {
+        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, null);
+    }
+
+    public Page getNewInstanceWithId(UUID id) {
+        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
     }
 
     public static String generateChangeCode(String title) {
@@ -71,12 +88,12 @@ public class Page {
         }
     }
 
-    public UUID getPageId() {
-        return pageId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setPageId(UUID pageId) {
-        this.pageId = pageId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getOwnerId() {

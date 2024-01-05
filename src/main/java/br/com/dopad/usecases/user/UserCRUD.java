@@ -5,6 +5,6 @@ import br.com.dopad.domain.entities.user.User;
 import java.util.*;
 
 public interface UserCRUD {
-    User addUser(String name, String email, String password);
+    User addUser(String name, String password);
     User getById(UUID userId);
 }

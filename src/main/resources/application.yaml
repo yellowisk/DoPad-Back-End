@@ -24,6 +24,9 @@ queries:
         page: >
           INSERT INTO dopad_platform.page (id, owner_id, title, text, status, change_code, upload_date, is_private) 
           VALUES (?, ?, ?, (to_json(?::jsonb)), ?::page_status, ?, ?, ?)
+      select:
+        page-by-id: >
+          SELECT * FROM dopad_platform.page WHERE id = ?
     page-membership-dao:
         insert:
           page-membership: >

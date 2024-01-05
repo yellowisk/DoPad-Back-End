@@ -15,7 +15,7 @@ public class UserCRUDImpl implements UserCRUD {
     }
 
     @Override
-    public User addUser(String name, String email, String password) {
+    public User addUser(String name, String password) {
         User user = User.createWithOnlyNameAndPassword(name, password);
         return userDAO.saveUser(user);
     }
