@@ -17,8 +17,25 @@ public class User {
         this.userId = userId;
     }
 
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public static User createWithOnlyId(UUID userId) {
         return new User(userId);
+    }
+
+    public static User createWithOnlyNameAndPassword(String name, String password) {
+        return new User(name, password);
+    }
+
+    public User getNewInstanceWithId(UUID userId) {
+        return new User(userId, name, password);
+    }
+
+    public static User createFull(UUID userId, String name, String password) {
+        return new User(userId, name, password);
     }
 
     public UUID getUserId() {

@@ -15,7 +15,10 @@ queries:
       insert:
         user: >
           INSERT INTO dopad_platform.user (id, username, password) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          VALUES (?, ?, ?)
+      select:
+        user-by-id: >
+          SELECT * FROM dopad_platform.user WHERE id = ?
     page-dao:
       insert:
         page: >
