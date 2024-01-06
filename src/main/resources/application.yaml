@@ -38,3 +38,5 @@ queries:
         select:
           page-membership-by-page-id-and-user-id: >
             SELECT * FROM dopad_platform.page_membership WHERE page_id = ? AND user_id = ?
+          page-membership-by-page-id: >
+            SELECT * FROM dopad_platform.page_membership WHERE page_id = ?

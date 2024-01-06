@@ -22,6 +22,10 @@ public class PageMembership {
         this.status = status;
     }
 
+    public PageMembership(UUID pageId) {
+        this.pageId = pageId;
+    }
+
     public PageMembership getNewInstanceWithId(UUID id) {
         return new PageMembership(id, pageId, userId, status);
     }
@@ -32,6 +36,10 @@ public class PageMembership {
 
     public static PageMembership createForDB(UUID pageId, UUID userId, PageMembershipStatus status) {
         return new PageMembership(pageId, userId, status);
+    }
+
+    public static PageMembership createWithOnlyPageId(UUID pageId) {
+        return new PageMembership(pageId);
     }
 
     public UUID getId() {
