@@ -2,6 +2,7 @@ package br.com.dopad.usecases.user;
 
 import br.com.dopad.domain.entities.user.User;
 import br.com.dopad.usecases.user.gateway.UserDAO;
+import br.com.dopad.web.model.user.request.UserRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,8 +16,8 @@ public class UserCRUDImpl implements UserCRUD {
     }
 
     @Override
-    public User addUser(String name, String password) {
-        User user = User.createWithOnlyNameAndPassword(name, password);
+    public User addUser(UserRequest request) {
+        User user = User.createWithOnlyNameAndPassword(request.getUsername(), request.getPassword());
         return userDAO.saveUser(user);
     }
 
