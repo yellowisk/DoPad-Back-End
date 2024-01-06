@@ -5,6 +5,7 @@ import br.com.dopad.usecases.user.gateway.UserDAO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,7 @@ public class UserDAOImpl implements UserDAO {
     @Value("${queries.sql.user-dao.select.user-by-id}")
     private String selectUserByIdQuery;
 
+    @Transactional
     @Override
     public User saveUser(User user) {
         UUID userId = UUID.randomUUID();

@@ -1,5 +1,7 @@
 package br.com.dopad.web.model.user.request;
 
+import br.com.dopad.domain.entities.user.User;
+
 public class UserRequest {
     private String username;
     private String password;
@@ -7,6 +9,10 @@ public class UserRequest {
     public UserRequest(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User toUser() {
+        return new User(username, password);
     }
 
     public String getUsername() {

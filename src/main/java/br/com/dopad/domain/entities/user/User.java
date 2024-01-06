@@ -22,12 +22,21 @@ public class User {
         this.password = password;
     }
 
+    public User(UUID id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
     public static User createWithOnlyId(UUID userId) {
         return new User(userId);
     }
 
     public static User createWithOnlyNameAndPassword(String username, String password) {
         return new User(username, password);
+    }
+
+    public static User createWithOnlyIdAndUsername(UUID id, String username) {
+        return new User(id, username);
     }
 
     public User getNewInstanceWithId(UUID userId) {
