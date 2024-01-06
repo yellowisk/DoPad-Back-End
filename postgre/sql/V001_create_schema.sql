@@ -1,4 +1,4 @@
-CREATE SCHEMA dopad_platform;
+CREATE SCHEMA IF NOT EXISTS dopad_platform;
 
 ALTER SCHEMA dopad_platform OWNER TO "dopad";
 
@@ -34,7 +34,7 @@ CREATE TABLE dopad_platform.page (
     text jsonb,
     status dopad_platform.page_status NOT NULL,
     change_code varchar NOT NULL,
-    upload_date timestamp NOT NULL,
+    upload_date timestamp WITH TIME ZONE NOT NULL,
     is_private boolean NOT NULL
 );
 

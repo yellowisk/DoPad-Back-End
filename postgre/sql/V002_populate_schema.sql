@@ -12,8 +12,8 @@ INSERT INTO dopad_platform.page (id, owner_id, title, text,
                                  is_private)
 VALUES ('21bf2268-ecd3-4f6c-85e9-2a1031530c0e'::uuid, '78cec5db-6396-4fd9-803f-1fd469d76330'::uuid,
         'Yellow Page',
-        to_json('[{"text": "Line 1", "author": "yellowisk", " changeCode": "vS7pk2rYyvR1lWAav7g2SYvn3i0GWSVvZCrViadV48M=", "date": "2023-06-10 07:55:00"},
-                  {"text": "Line 2", "author": "blueisk", " changeCode": "bTMKLH7dg4BesarRpyZo+NSu83BxkQ+gZBwDchDF9Xo=", "date": "2023-06-10 07:55:00"}
+        to_json('[{"text": "Line 1", "author": "yellowisk", "changeCode": "vS7pk2rYyvR1lWAav7g2SYvn3i0GWSVvZCrViadV48M=", "date": "2023-06-09T07:45:01Z"},
+                  {"text": "Line 2", "author": "blueisk", "changeCode": "bTMKLH7dg4BesarRpyZo+NSu83BxkQ+gZBwDchDF9Xo=", "date": "2023-06-09T07:45:00Z"}
                   ]'::jsonb), 'SENT'::dopad_platform.page_status, 'vgwU4dvrLRfZgJgvQQ2nZnQQg95nAdDJJee+1C2KBXo=',
         '2023-06-09 07:45:00', false);
 
