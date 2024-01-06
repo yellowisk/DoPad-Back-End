@@ -3,22 +3,22 @@ package br.com.dopad.domain.entities.user;
 import java.util.UUID;
 
 public class User {
-    private UUID userId;
-    private String name;
+    private UUID id;
+    private String username;
     private String password;
 
-    public User(UUID userId, String name, String password) {
-        this.userId = userId;
-        this.name = name;
+    public User(UUID id, String username, String password) {
+        this.id = id;
+        this.username = username;
         this.password = password;
     }
 
-    public User(UUID userId) {
-        this.userId = userId;
+    public User(UUID id) {
+        this.id = id;
     }
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
@@ -26,32 +26,32 @@ public class User {
         return new User(userId);
     }
 
-    public static User createWithOnlyNameAndPassword(String name, String password) {
-        return new User(name, password);
+    public static User createWithOnlyNameAndPassword(String username, String password) {
+        return new User(username, password);
     }
 
     public User getNewInstanceWithId(UUID userId) {
-        return new User(userId, name, password);
+        return new User(userId, username, password);
     }
 
-    public static User createFull(UUID userId, String name, String password) {
-        return new User(userId, name, password);
+    public static User createFull(UUID userId, String username, String password) {
+        return new User(userId, username, password);
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

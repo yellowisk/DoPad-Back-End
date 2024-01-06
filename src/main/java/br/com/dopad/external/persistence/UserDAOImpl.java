@@ -27,7 +27,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User saveUser(User user) {
         UUID userId = UUID.randomUUID();
-        jdbcTemplate.update(insertUserQuery, userId, user.getName(), user.getPassword());
+        jdbcTemplate.update(insertUserQuery, userId, user.getUsername(), user.getPassword());
         return user.getNewInstanceWithId(userId);
     }
 
@@ -37,8 +37,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public User mapperUserFromRs(ResultSet rs, int rowNum) throws SQLException {
-        UUID userId = (UUID) rs.getObject("user_id");
-        String name = rs.getString("name");
+        UUID userId = (UUID) rs.getObject("id");
+        String name = rs.getString("username");
         String password = rs.getString("password");
         return User.createFull(userId, name, password);
     }
