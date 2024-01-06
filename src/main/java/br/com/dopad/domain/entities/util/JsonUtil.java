@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class JsonUtil {
@@ -17,19 +16,21 @@ public class JsonUtil {
         this.objectMapper = objectMapper;
     }
 
+    public <T> List<T> readListFromJsonArray(String jsonArray, Class<T> type) {
+        try {
+            return objectMapper.readValue(jsonArray, objectMapper.getTypeFactory().constructCollectionType(List.class, type));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Error converting JSON to list", e);
+        }
+    }
+
     public String writeListAsJsonArray(List<?> list) {
         try {
             return objectMapper.writeValueAsString(list);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("Error converting list to JSON", e);
-        }
-    }
-
-    public List<Map<String, Object>> readJsonArrayToList(String jsonArray) {
-        try {
-            return objectMapper.readValue(jsonArray, new TypeReference<List<Map<String, Object>>>() {});
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error converting JSON to list", e);
         }
     }
 }

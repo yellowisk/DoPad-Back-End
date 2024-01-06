@@ -1,18 +1,24 @@
-package br.com.dopad.domain.entities.line;
+package br.com.dopad.web.model.page.request;
+
+import br.com.dopad.domain.entities.line.Line;
 
 import java.sql.Timestamp;
 
-public class Line {
+public class LineDTO {
     private String text;
     private String author;
     private String pageChangeCode;
     private Timestamp date;
 
-    public Line(String text, String author, String pageChangeCode, Timestamp date) {
+    public LineDTO(String text, String author, String pageChangeCode, Timestamp date) {
         this.text = text;
         this.author = author;
         this.pageChangeCode = pageChangeCode;
         this.date = date;
+    }
+
+    public Line convertToLine() {
+        return new Line(text, author, pageChangeCode, date);
     }
 
     public String getText() {
