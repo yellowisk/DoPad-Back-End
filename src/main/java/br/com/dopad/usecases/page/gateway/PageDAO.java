@@ -6,5 +6,5 @@ import java.util.*;
 
 public interface PageDAO {
     Page savePage(Page page);
-    Optional<Page> getPageById(UUID id);
+    Optional<Page> findById(UUID id);
 }

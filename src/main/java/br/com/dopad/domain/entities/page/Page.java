@@ -1,12 +1,12 @@
 package br.com.dopad.domain.entities.page;
 
+import br.com.dopad.domain.entities.line.Line;
 import br.com.dopad.domain.entities.user.User;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
@@ -15,19 +15,19 @@ public class Page {
     private UUID id;
     private UUID ownerId;
     private String title;
-    private String text;
+    private List<Line> lines;
     private PageStatus status;
     private String changeCode;
     private boolean isPrivate;
     private Timestamp uploadDate;
     private List<User> members;
 
-    public Page(UUID id, UUID ownerId, String title, String text, PageStatus status,
+    public Page(UUID id, UUID ownerId, String title, List<Line> lines, PageStatus status,
                 String changeCode, boolean isPrivate, Timestamp uploadDate, List<User> members) {
         this.id = id;
         this.ownerId = ownerId;
         this.title = title;
-        this.text = text;
+        this.lines = lines;
         this.status = status;
         this.changeCode = changeCode;
         this.isPrivate = isPrivate;
@@ -35,7 +35,8 @@ public class Page {
         this.members = members;
     }
 
-    public Page(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate) {
+    public Page(UUID ownerId, String title, PageStatus status, String changeCode,
+                boolean isPrivate, Timestamp uploadDate) {
         this.ownerId = ownerId;
         this.title = title;
         this.status = status;
@@ -44,7 +45,8 @@ public class Page {
         this.uploadDate = uploadDate;
     }
 
-    public Page(UUID ownerId, String title, PageStatus status, String changeCode, boolean isPrivate, Timestamp uploadDate, ArrayList<User> members) {
+    public Page(UUID ownerId, String title, PageStatus status, String changeCode,
+                boolean isPrivate, Timestamp uploadDate, List<User> members) {
         this.ownerId = ownerId;
         this.title = title;
         this.status = status;
@@ -54,25 +56,39 @@ public class Page {
         this.members = members;
     }
 
-    public static Page createForDB(UUID ownerId, String title, PageStatus status, String changeCode,
-                                   boolean isPrivate, Timestamp uploadDate, ArrayList<User> members) {
-        return new Page(ownerId, title, status, changeCode, isPrivate, uploadDate, members);
+    public Page(UUID ownerId, String title, List<Line> lines, boolean isPrivate) {
+        this.ownerId = ownerId;
+        this.title = title;
+        this.lines = lines;
+        this.isPrivate = isPrivate;
     }
 
-    public static Page createFull(UUID id, UUID ownerId, String title, String text,
+    public Page(UUID ownerId, String title, List<Line> lines, PageStatus status, String changeCode,
+                boolean isPrivate, Timestamp uploadDate, List<User> members) {
+        this.ownerId = ownerId;
+        this.title = title;
+        this.lines = lines;
+        this.status = status;
+        this.changeCode = changeCode;
+        this.isPrivate = isPrivate;
+        this.uploadDate = uploadDate;
+        this.members = members;
+    }
+
+    public static Page createForDB(UUID ownerId, String title, List<Line> lines, PageStatus status,
+                                   String changeCode, boolean isPrivate, Timestamp uploadDate,
+                                   List<User> members) {
+        return new Page(ownerId, title, lines, status, changeCode, isPrivate, uploadDate, members);
+    }
+
+    public static Page createFull(UUID id, UUID ownerId, String title, List<Line> lines,
                                   PageStatus status, String changeCode, boolean isPrivate,
                                   Timestamp uploadDate, List<User> members) {
-        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
-    }
-
-    public static Page createForResultSet(UUID id, UUID ownerId, String title, String text,
-                                          PageStatus status, String changeCode, boolean isPrivate,
-                                          Timestamp uploadDate) {
-        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, null);
+        return new Page(id, ownerId, title, lines, status, changeCode, isPrivate, uploadDate, members);
     }
 
     public Page getNewInstanceWithId(UUID id) {
-        return new Page(id, ownerId, title, text, status, changeCode, isPrivate, uploadDate, members);
+        return new Page(id, ownerId, title, lines, status, changeCode, isPrivate, uploadDate, members);
     }
 
     public static String generateChangeCode(String title) {
@@ -112,12 +128,12 @@ public class Page {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public List<Line> getLines() {
+        return lines;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLines(List<Line> lines) {
+        this.lines = lines;
     }
 
     public PageStatus getStatus() {
