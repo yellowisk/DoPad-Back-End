@@ -7,18 +7,18 @@ import java.sql.Timestamp;
 public class LineDTO {
     private String text;
     private String author;
-    private String pageChangeCode;
+    private String changeCode;
     private Timestamp date;
 
-    public LineDTO(String text, String author, String pageChangeCode, Timestamp date) {
+    public LineDTO(String text, String author, String changeCode, Timestamp date) {
         this.text = text;
         this.author = author;
-        this.pageChangeCode = pageChangeCode;
+        this.changeCode = changeCode;
         this.date = date;
     }
 
     public Line convertToLine() {
-        return new Line(text, author, pageChangeCode, date);
+        return new Line(text, author, changeCode, date);
     }
 
     public String getText() {
@@ -37,12 +37,12 @@ public class LineDTO {
         this.author = author;
     }
 
-    public String getPageChangeCode() {
-        return pageChangeCode;
+    public String getChangeCode() {
+        return changeCode;
     }
 
-    public void setPageChangeCode(String pageChangeCode) {
-        this.pageChangeCode = pageChangeCode;
+    public void setChangeCode(String changeCode) {
+        this.changeCode = changeCode;
     }
 
     public Timestamp getDate() {

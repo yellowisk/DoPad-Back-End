@@ -1,5 +1,6 @@
 package br.com.dopad.usecases.page;
 
+import br.com.dopad.domain.entities.line.Line;
 import br.com.dopad.domain.entities.page.Page;
 import br.com.dopad.domain.entities.page.PageMembershipStatus;
 import br.com.dopad.domain.entities.page.PageStatus;
@@ -33,7 +34,7 @@ public class PageCRUDImpl implements PageCRUD {
 
         members.add(userCRUD.getById(page.getOwnerId()));
         Page pageFromDB = pageDAO.savePage(Page.createForDB(page.getOwnerId(), page.getTitle(),
-                page.getLines(), PageStatus.SENT, Page.generateChangeCode(page.getTitle()),
+                Line.setForPage(page.getLines()), PageStatus.SENT, Page.generateChangeCode(page.getTitle()),
                 page.isPrivate(), Timestamp.valueOf(LocalDateTime.now()), members));
 
         pageMembershipCRUD.addMembership(pageFromDB.getId(), pageFromDB.getOwnerId(), PageMembershipStatus.ACCEPTED);

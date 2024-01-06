@@ -39,8 +39,8 @@ public class PageDAOImpl implements PageDAO {
     public Page savePage(Page page) {
         UUID pageId = UUID.randomUUID();
         jdbcTemplate.update(insertPageQuery, pageId,  page.getOwnerId(), page.getTitle(),
-                jsonUtil.writeListAsJsonArray(page.getLines()), PageStatus.SENT.name(), page.getChangeCode(),
-                page.getUploadDate(), page.isPrivate());
+                jsonUtil.writeListAsJsonArray(page.getLines()), PageStatus.SENT.name(),
+                page.getChangeCode(), page.getUploadDate(), page.isPrivate());
         return page.getNewInstanceWithId(pageId);
     }
 
