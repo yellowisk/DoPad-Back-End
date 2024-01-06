@@ -36,7 +36,15 @@ queries:
             INSERT INTO dopad_platform.page_membership (id, page_id, user_id, status) 
             VALUES (?, ?, ?, ?::page_membership_status)
         select:
+          page-membership-by-id: >
+            SELECT * FROM dopad_platform.page_membership WHERE id = ?
           page-membership-by-page-id-and-user-id: >
             SELECT * FROM dopad_platform.page_membership WHERE page_id = ? AND user_id = ?
           page-membership-by-page-id: >
             SELECT * FROM dopad_platform.page_membership WHERE page_id = ?
+        update:
+          page-membership-status-by-id: >
+            UPDATE dopad_platform.page_membership SET status = ?::page_membership_status WHERE id = ?
+        delete:
+          page-membership-by-id: >
+            DELETE FROM dopad_platform.page_membership WHERE id = ?

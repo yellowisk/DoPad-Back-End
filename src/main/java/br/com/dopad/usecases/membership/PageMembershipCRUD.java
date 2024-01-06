@@ -7,6 +7,9 @@ import java.util.*;
 
 public interface PageMembershipCRUD {
     PageMembership addMembership(UUID userId, UUID pageId, PageMembershipStatus status);
-    PageMembership getMembershipByUserAndPage(UUID userId, UUID pageId);
+    PageMembership getById(UUID membershipId);
+    PageMembership getByUserAndPage(UUID userId, UUID pageId);
     List<PageMembership> getAllFromPage(UUID pageId);
+    PageMembership updateMembership(UUID membershipId, String status);
+    PageMembership deleteById(UUID membershipId);
 }

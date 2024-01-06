@@ -3,6 +3,7 @@ package br.com.dopad.external.persistence;
 import br.com.dopad.domain.entities.page.PageMembership;
 import br.com.dopad.domain.entities.page.PageMembershipStatus;
 import br.com.dopad.usecases.membership.gateway.PageMembershipDAO;
+import br.com.dopad.web.exception.GenericResourceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -24,11 +25,20 @@ public class PageMembershipDAOImpl implements PageMembershipDAO {
     @Value("${queries.sql.page-membership-dao.insert.page-membership}")
     private String insertPageMembershipQuery;
 
+    @Value("${queries.sql.page-membership-dao.select.page-membership-by-id}")
+    private String selectPageMembershipByIdQuery;
+
     @Value("${queries.sql.page-membership-dao.select.page-membership-by-page-id-and-user-id}")
     private String selectPageMembershipByPageIdAndUserIdAndQuery;
 
     @Value("${queries.sql.page-membership-dao.select.page-membership-by-page-id}")
     private String selectPageMembershipByPageIdQuery;
+
+    @Value("${queries.sql.page-membership-dao.update.page-membership-status-by-id}")
+    private String updatePageMembershipStatusByIdQuery;
+
+    @Value("${queries.sql.page-membership-dao.delete.page-membership-by-id}")
+    private String deletePageMembershipByIdQuery;
 
     @Transactional
     @Override
@@ -40,14 +50,35 @@ public class PageMembershipDAOImpl implements PageMembershipDAO {
     }
 
     @Override
+    public PageMembership findById(UUID membershipId) {
+        return jdbcTemplate.queryForObject(selectPageMembershipByIdQuery,
+                this::mapperPageMembershipFromRs, membershipId);
+    }
+
+    @Override
     public PageMembership findByPageIdAndUserId(PageMembership membership) {
         return jdbcTemplate.queryForObject(selectPageMembershipByPageIdAndUserIdAndQuery,
                 this::mapperPageMembershipFromRs, membership.getPageId(), membership.getUserId());
     }
 
     @Override
-    public List<PageMembership> findAllByPageId(PageMembership membership) {
-        return jdbcTemplate.query(selectPageMembershipByPageIdQuery, this::mapperPageMembershipFromRs, membership.getPageId());
+    public List<PageMembership> findAllByPageId(UUID pageId) {
+        return jdbcTemplate.query(selectPageMembershipByPageIdQuery, this::mapperPageMembershipFromRs, pageId);
+    }
+
+    @Override
+    public PageMembership changeStatus(PageMembership membership) {
+        jdbcTemplate.update(updatePageMembershipStatusByIdQuery, membership.getStatus().name(), membership.getId());
+        return membership;
+    }
+
+    @Transactional
+    @Override
+    public PageMembership removeMembership(PageMembership membership) {
+        if(jdbcTemplate.update(deletePageMembershipByIdQuery, membership.getId()) != 1) {
+            throw new GenericResourceException("Unexpected error when trying to delete membership with id "+membership.getId(), "Exclusion error");
+        }
+        return membership;
     }
 
     public PageMembership mapperPageMembershipFromRs(ResultSet rs, int rowNum) throws SQLException {

@@ -10,7 +10,6 @@ import java.util.*;
 @Service
 public class PageMembershipCRUDImpl implements PageMembershipCRUD {
     private final PageMembershipDAO pageMembershipDAO;
-
     public PageMembershipCRUDImpl(PageMembershipDAO pageMembershipDAO) {
         this.pageMembershipDAO = pageMembershipDAO;
     }
@@ -22,7 +21,12 @@ public class PageMembershipCRUDImpl implements PageMembershipCRUD {
     }
 
     @Override
-    public PageMembership getMembershipByUserAndPage(UUID userId, UUID pageId) {
+    public PageMembership getById(UUID membershipId) {
+        return pageMembershipDAO.findById(membershipId);
+    }
+
+    @Override
+    public PageMembership getByUserAndPage(UUID userId, UUID pageId) {
         PageMembership pageMembership = PageMembership.createForDB(userId, pageId, PageMembershipStatus.PENDING);
         return pageMembershipDAO.findByPageIdAndUserId(pageMembership);
     }
@@ -30,6 +34,17 @@ public class PageMembershipCRUDImpl implements PageMembershipCRUD {
     @Override
     public List<PageMembership> getAllFromPage(UUID pageId) {
         PageMembership pageMembership = PageMembership.createWithOnlyPageId(pageId);
-        return pageMembershipDAO.findAllByPageId(pageMembership);
+        return pageMembershipDAO.findAllByPageId(pageId);
+    }
+
+    @Override
+    public PageMembership updateMembership(UUID membershipId, String status) {
+        PageMembership pageMembership = PageMembership.createWithIdAndStatus(membershipId, PageMembershipStatus.valueOf(status));
+        return pageMembershipDAO.changeStatus(pageMembership);
+    }
+
+    @Override
+    public PageMembership deleteById(UUID membershipId) {
+        return pageMembershipDAO.removeMembership(getById(membershipId));
     }
 }
