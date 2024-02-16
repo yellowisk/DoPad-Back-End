@@ -33,7 +33,6 @@ public class PageMembershipCRUDImpl implements PageMembershipCRUD {
 
     @Override
     public List<PageMembership> getAllFromPage(UUID pageId) {
-        PageMembership pageMembership = PageMembership.createWithOnlyPageId(pageId);
         return pageMembershipDAO.findAllByPageId(pageId);
     }
 

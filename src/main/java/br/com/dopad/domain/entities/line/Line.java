@@ -20,24 +20,23 @@ public class Line {
         this.date = date;
     }
 
-    public static String generateLineChangeCode(int index, String username, String title) {
+    public static String generateChangeCode(int index, String username, String title) {
         try {
             String inputString = username + title + System.currentTimeMillis() + index;
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(inputString.getBytes(StandardCharsets.UTF_8));
-            String encodedHash = Base64.getEncoder().encodeToString(hashBytes);
-            return encodedHash;
+            return Base64.getEncoder().encodeToString(hashBytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static List<Line> setForPage(List<Line> lines) {
-        return lines.stream().map(line -> {
-            line.setChangeCode(generateLineChangeCode(lines.indexOf(line), line.getAuthor(), line.getText()));
-            return line;
-        }).toList();
+    public static List<Line> generateChangeCodeForLines(List<Line> lines) {
+        return lines.stream().peek(line ->
+                line.setChangeCode(generateChangeCode(lines.indexOf(line),
+                        line.getAuthor(), line.getText()))
+        ).toList();
     }
 
     public String getText() {

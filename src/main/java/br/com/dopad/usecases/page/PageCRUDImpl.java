@@ -34,7 +34,7 @@ public class PageCRUDImpl implements PageCRUD {
 
         members.add(userCRUD.getById(page.getOwnerId()));
         Page pageFromDB = pageDAO.savePage(Page.createForDB(page.getOwnerId(), page.getTitle(),
-                Line.setForPage(page.getLines()), PageStatus.SENT, Page.generateChangeCode(page.getTitle()),
+                Line.generateChangeCodeForLines(page.getLines()), PageStatus.SENT, Page.generateChangeCode(page.getTitle()),
                 page.isPrivate(), Timestamp.valueOf(LocalDateTime.now()), members));
 
         pageMembershipCRUD.addMembership(pageFromDB.getId(), pageFromDB.getOwnerId(), PageMembershipStatus.ACCEPTED);
