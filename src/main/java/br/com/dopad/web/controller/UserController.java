@@ -25,10 +25,15 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.fromUser(user));
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable UUID userId) {
         User user = userCRUD.getById(userId);
         return ResponseEntity.ok(UserResponse.fromUser(user));
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserResponse> getUserByUsername(@PathVariable String username) {
+        User user = userCRUD.getByUsername(username);
+        return ResponseEntity.ok(UserResponse.fromUser(user));
+    }
 }

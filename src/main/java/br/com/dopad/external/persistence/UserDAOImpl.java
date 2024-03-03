@@ -25,6 +25,9 @@ public class UserDAOImpl implements UserDAO {
     @Value("${queries.sql.user-dao.select.user-by-id}")
     private String selectUserByIdQuery;
 
+    @Value("${queries.sql.user-dao.select.user-by-username}")
+    private String selectUserByUserNameQuery;
+
     @Transactional
     @Override
     public User saveUser(User user) {
@@ -36,6 +39,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findUserById(UUID id) {
         return jdbcTemplate.queryForObject(selectUserByIdQuery, this::mapperUserFromRs, id);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return jdbcTemplate.queryForObject(selectUserByUserNameQuery, this::mapperUserFromRs, username);
     }
 
     public User mapperUserFromRs(ResultSet rs, int rowNum) throws SQLException {

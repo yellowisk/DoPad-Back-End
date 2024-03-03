@@ -8,4 +8,5 @@ import java.util.*;
 public interface UserCRUD {
     User addUser(UserRequest request);
     User getById(UUID userId);
+    User getByUsername(String username);
 }

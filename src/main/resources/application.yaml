@@ -22,6 +22,8 @@ queries:
       select:
         user-by-id: >
           SELECT * FROM dopad_platform.user WHERE id = ?
+        user-by-username: >
+          SELECT * FROM dopad_platform.user WHERE username = ?
     page-dao:
       insert:
         page: >

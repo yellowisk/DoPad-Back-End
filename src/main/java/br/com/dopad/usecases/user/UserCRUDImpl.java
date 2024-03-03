@@ -25,4 +25,9 @@ public class UserCRUDImpl implements UserCRUD {
     public User getById(UUID userId) {
         return userDAO.findUserById(userId);
     }
+
+    @Override
+    public User getByUsername(String username) {
+        return userDAO.findUserByUsername(username);
+    }
 }

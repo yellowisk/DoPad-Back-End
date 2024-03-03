@@ -7,4 +7,5 @@ import java.util.*;
 public interface UserDAO {
     User saveUser(User user);
     User findUserById(UUID id);
+    User findUserByUsername(String username);
 }
